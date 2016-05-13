@@ -7,7 +7,7 @@
  * maakt een wit kruis door een wit-kleur edgepiece op de juiste plaats te brengen
  * startfase van deze functie moet het wit vlak vanboven en het groene vlak vooraan zijn: dit staat zo, omdat de kubus zo in de solver dient geplaatst te worden
  *@param:  char matrix[6][9]: de matrix van de kubus
- *@bug: zit nog bug: het reeds gevonden kruis wordt toch soms nog verbroken
+ *@bug: zit nog bug: het reeds gevonden kruis wordt toch soms nog verbroken //TODO delete
  *@return void (matrix heeft nu een wit vlak) */
 void maak_wit_kruis(char matrix[6][9]) {
 	char wb; char wo; char wg; char wr;
@@ -654,7 +654,7 @@ void wit_groen_rood_inschuiven(char cp2, char matrix[6][9]) {
 			RCCW(matrix); 
 			DCCW(matrix);
 			RCW(matrix); 
-			UCW(matrix);
+			DCW(matrix);
 			cp2 = find_corner_piece('W', 'G', 'R', matrix);
 		}
 	}

@@ -3,14 +3,14 @@
 #include <stdio.h>
 #include "dwengoDelay.h"
 
+char i; //nodig voor de for-lussen
+
 /* @brief: draait de elementen van het opgegeven vlak in wijzerzin.
  * Dit is een onmogelijke actie met de kubus (enkel bedoeld om de matrix aan te passen)
  * @param:  int vlak: het nummer van het vlak
  *          char matrix[6][9]: de matrix van de kubus
  * @return: void*/
-int i;
-
-void draai_wijzerzin(int vlak, char matrix[6][9]) { 
+void draai_wijzerzin(char vlak, char matrix[6][9]) { 
 	char temp[9];
 	for (i = 0; i < 9; i++) {
 		temp[i] = matrix[vlak][i];
@@ -31,7 +31,7 @@ void draai_wijzerzin(int vlak, char matrix[6][9]) {
  * @param:  int vlak: het nummer van het vlak
  *          char matrix[6][9]: de matrix van de kubus
  * @return: void*/
-void draai_tegenwijzerzin(int vlak, char matrix[6][9]) {
+void draai_tegenwijzerzin(char vlak, char matrix[6][9]) {
 	char temp[9];
 	for (i = 0; i < 9; i++) {
 		temp[i] = matrix[vlak][i];
@@ -52,7 +52,7 @@ void draai_tegenwijzerzin(int vlak, char matrix[6][9]) {
  * @param:  int vlak: het nummer van het vlak
  *          char matrix[6][9]: de matrix van de kubus
  * @return: void*/
-void draai_dubbel(int vlak, char matrix[6][9]) { 
+void draai_dubbel(char vlak, char matrix[6][9]) { 
 	char temp[9];
 	for (i = 0; i < 9; i++) {
 		temp[i] = matrix[vlak][i];
@@ -284,13 +284,13 @@ void RCW(char matrix[6][9]) {
 	ServoB 90° draaien in tegenwijzerzin
         DC1 sluiten 
         ServoB terugzetten*/
+        servo2(90);
+        delay_ms(500);
         motor1open();
         delay_ms(500);
-        servo2(-90);
+        servo2(0);
         delay_ms(500);
         motor1toe();
-        delay_ms(500);
-        servo2(10);
         delay_ms(500);
 
 	/*matrix aanpassen*/
@@ -508,13 +508,13 @@ void FCW(char matrix[6][9]) {
     DC2 sluiten
     ServoC terugzetten
     */
+    servo3(90);
+    delay_ms(500);
     motor2open();
     delay_ms(500);
-    servo3(-90);
+    servo3(0);
     delay_ms(500);
     motor2toe();
-    delay_ms(500);
-    servo3(10);
     delay_ms(500);
 
     /*matrix aanpassen*/

@@ -14,15 +14,16 @@ extern "C" {
 
 #include "servo.h"
 #include "dc_motor.h"
+#include "dwengoDelay.h"
 
 /*Vlak in wijzerzin draaien*/
-void draai_wijzerzin(int, char[6][9]);
+void draai_wijzerzin(char, char[6][9]);
 
 /*Vlak in tegenwijzerzin draaien*/
-void draai_tegenwijzerzin(int, char[6][9]);
+void draai_tegenwijzerzin(char, char[6][9]);
 
 /*Vlak tweemaal draaien*/
-void draai_dubbel(int, char[6][9]);
+void draai_dubbel(char, char[6][9]);
 
 /*Voorvlak naar rechts draaien*/
 void draai_voor_naar_rechts(char[6][9]);
