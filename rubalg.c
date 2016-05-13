@@ -10,7 +10,7 @@
  *@bug: zit nog bug: het reeds gevonden kruis wordt toch soms nog verbroken
  *@return void (matrix heeft nu een wit vlak) */
 void maak_wit_kruis(char matrix[6][9]) {
-	int wb; int wo; int wg; int wr;
+	char wb; char wo; char wg; char wr;
 	// eerst wit-blauw edgepiece correct plaatsen
 	wb = find_edgepiece('W', 'B', matrix); 
    // wb/10 is vlak, wb%10 is positie
@@ -227,11 +227,11 @@ void maak_wit_kruis(char matrix[6][9]) {
 /*@brief: hulpfunctie die de edgepiecepositie zoekt van edgepiece met kleuren a en b
  *@param: char matrix[6][9]: de matrix van de kubus
  *        char a: kleur van blok
- *		  char b: kleur van blok
- *@return  int: tiental is het vlak van char a, eenheid de positie van char a in het vlak, geeft dus positie van eerst meegegeven kleur terug! */
-int find_edgepiece(char a, char b, char matrix[6][9]){ // geeft vlak en positie terug in een int[2], werkt!
-    int i; int j;
-	int result ; 
+ *        char b: kleur van blok
+ *@return  char: tiental is het vlak van char a, eenheid de positie van char a in het vlak, geeft dus positie van eerst meegegeven kleur terug! */
+char find_edgepiece(char a, char b, char matrix[6][9]){ 
+    char i; char j;
+	char result ; 
 	//edge enkel op pos met oneven indexen zoeken
 	for (i = 0; i < 6; i++) {
 	for (j = 1; j < 8; j += 2) {
@@ -377,10 +377,10 @@ int find_edgepiece(char a, char b, char matrix[6][9]){ // geeft vlak en positie 
 
 /*@brief: hulpfunctie die een edgepiece naar beneden draait zonder de reeds gemaakt elementen van het wit kruis weer te verbreken
  *@param:  char matrix[6][9]: de matrix van de kubus
- *         int a: vlak van edgepiece-blok
- *	       int b: positie van edgepiece-blok in het vlak
+ *         char a: vlak van edgepiece-blok
+ *	   char b: positie van edgepiece-blok in het vlak
  *@return void  */
-void bringdownedge(int a, int b, char matrix[6][9]) {  											
+void bringdownedge(char a, char b, char matrix[6][9]) {  											
 	if (a == 0) { // wit
 		if (b == 1) { BCW2(matrix); } 
 		if (b == 3) { LCW2(matrix); }
@@ -420,7 +420,7 @@ void bringdownedge(int a, int b, char matrix[6][9]) {
  *@param:  char matrix[6][9]: de matrix van de kubus
  *@return void  */
 void solve_corner_pieces(char matrix[6][9]) {
-	int cp1; int cp2;
+	char cp1; char cp2;
 	/* eerst wit-blauw-rood cornerpiece inschuiven */
 	cp1 = find_corner_piece('W', 'B', 'R', matrix); 
 	if (cp1 / 10 != 0 && cp1 != 10 && cp1 != 16 && cp1 != 26 && cp1 != 28 && cp1 != 32 && cp1 != 38 && cp1 != 40 && cp1 != 42) { // indien cornerpiece vanboven zit
@@ -481,7 +481,7 @@ void solve_corner_pieces(char matrix[6][9]) {
 /*@brief: hulpfunctie die wit-blauw-rood in het witte vlak schuift op de gewenste plaats
  *@param:  char matrix[6][9]: de matrix van de kubus
  *@return void  */
-void wit_blauw_rood_inschuiven(int cp1,char matrix[6][9]) { 
+void wit_blauw_rood_inschuiven(char cp1,char matrix[6][9]) { 
 	if (cp1 == 12 || cp1 == 22 || cp1 == 50) { // rechtsboven vanonder
 		while (cp1 != 2 || matrix[0][2] != 'W') { // moet 1x 2x of 3x gebeuren tot goed zit
 			BCCW(matrix); 
@@ -526,7 +526,7 @@ void wit_blauw_rood_inschuiven(int cp1,char matrix[6][9]) {
 /*@brief: hulpfunctie die wit-blauw-oranje in het witte vlak schuift op de gewenste plaats
  *@param:  char matrix[6][9]: de matrix van de kubus
  *@return void  */
-void wit_blauw_oranje_inschuiven(int cp2, char matrix[6][9]) {
+void wit_blauw_oranje_inschuiven(char cp2, char matrix[6][9]) {
 	if (cp2 == 12 || cp2 == 22 || cp2 == 50) { // rechtsboven vanonder
 		DCW(matrix);
 		while ( cp2 != 0  || matrix[0][0] != 'W') { // moet 1x 2x of 3x gebeuren tot goed zit
@@ -569,9 +569,10 @@ void wit_blauw_oranje_inschuiven(int cp2, char matrix[6][9]) {
 }
 
 /*@brief: hulpfunctie die wit-groen-oranje in het witte vlak schuift op de gewenste plaats
- *@param:  char matrix[6][9]: de matrix van de kubus
+ *@param:   char cp2: positie van witte blok van wit-groen-oranje hoekstuk
+ *          char matrix[6][9]: de matrix van de kubus
  *@return void  */
-void wit_groen_oranje_inschuiven(int cp2, char matrix[6][9]) {
+void wit_groen_oranje_inschuiven(char cp2, char matrix[6][9]) {
 	if (cp2 == 12 || cp2 == 22 || cp2 == 50) { // rechtsboven vanonder
 		DCW2(matrix); 
 		while (cp2 != 6 || matrix[0][6] != 'W') { // moet 1x 2x of 3x gebeuren tot goed zit
@@ -614,9 +615,10 @@ void wit_groen_oranje_inschuiven(int cp2, char matrix[6][9]) {
 }
 
 /*@brief: hulpfunctie die wit-groen-rood in het witte vlak schuift op de gewenste plaats
- *@param:  char matrix[6][9]: de matrix van de kubus
+ *@param:   char cp2: positie van het witte blok van wit-groen-rood hoekstuk
+ *          char matrix[6][9]: de matrix van de kubus
  *@return void  */
-void wit_groen_rood_inschuiven(int cp2, char matrix[6][9]) {
+void wit_groen_rood_inschuiven(char cp2, char matrix[6][9]) {
 	if (cp2 == 12 || cp2 == 22 || cp2 == 50) { // rechtsboven vanonder
 		DCCW(matrix); 
 		while (cp2 != 8 || matrix[0][8] != 'W') { // moet 1x 2x of 3x gebeuren tot goed zit
@@ -670,7 +672,7 @@ void wit_groen_rood_inschuiven(int cp2, char matrix[6][9]) {
  *@bug: deze functie kan nog geoptimaliseerd worden!
  *@return void  */
 void solve_middle_layer(char matrix[6][9]) {
-	int controle = 0;
+	char controle = 0;
 	draai_links(matrix); draai_links(matrix); // zie dat vlak geel naar boven komt te staan
 	while (controle == 0) {
 		while (midden_test(matrix) == 1) {
@@ -774,8 +776,8 @@ next:;
 
 /*@brief: hulpfunctie die kijkt of er nog bruikbare edge-pieces zijn
 *@param:  char matrix[6][9]: de matrix van de kubus
-*@return int: 1 als er bruikbare gevonden is,0 indien niet  */
-int find_good_edge_piece(char matrix[6][9]) {
+*@return char: 1 als er bruikbare gevonden is,0 indien niet  */
+char find_good_edge_piece(char matrix[6][9]) {
 	if (matrix[0][1] != 'Y') {
 		if (matrix[2][7] != 'Y') { return 1; }
 	}
@@ -820,8 +822,8 @@ void links_midden_plaatsen(char matrix[6][9]) {
 
 /*@brief: hulpfunctie die test of de middelste laag in orde is
  *@param:  char matrix[6][9]: de matrix van de kubus
- *@return int: 0 als het in orde is, 1 als het nog niet in orde is  */
-int midden_test(char matrix[6][9]) {
+ *@return char: 0 als het in orde is, 1 als het nog niet in orde is  */
+char midden_test(char matrix[6][9]) {
 	if (((matrix[2][7] == 'B' && (matrix[0][1] == 'R' || matrix[0][1] == 'O')))) { return 1; }
 	if (((matrix[1][3] == 'O' && (matrix[0][5] == 'B' || matrix[0][5] == 'G')))) { return 1; }
 	if (((matrix[3][5] == 'R' && (matrix[0][3] == 'G' || matrix[0][3] == 'B')))) { return 1; }
@@ -838,7 +840,7 @@ int midden_test(char matrix[6][9]) {
  *@param:  char matrix[6][9]: de matrix van de kubus
  *@return void  */
 void maak_geel_kruis(char matrix[6][9]) {
-	int a = maak_geel_tussenstap(matrix);
+	char a = maak_geel_tussenstap(matrix);
 	if (a != 0) {
 		omsingelde_hoek(matrix); // indien geen enkel geval -> omsingelde hoek rotaties doen en functie opnieuw oproepen
 		maak_geel_tussenstap(matrix);
@@ -851,8 +853,8 @@ void maak_geel_kruis(char matrix[6][9]) {
 *                   een hoek opsingeld met gele kleuren
 *@param:  char matrix[6][9]: de matrix van de kubus
 *@bug : potentiele bug in het controleren van de gele blokken
-*@return int: 0 indien het opgelost is, 1 indien niet  */
-int maak_geel_tussenstap(char matrix[6][9]) {
+*@return char: 0 indien het opgelost is, 1 indien niet  */
+char maak_geel_tussenstap(char matrix[6][9]) {
 	// 4 states
 
 	// state 1: opgelost geel kruis
@@ -1399,9 +1401,9 @@ void yellow_edges_counter_clockwise(char matrix[6][9]) {
           char a: kleur 
 		  char b: kleur
 		  char c: kleur
- *@return int: geeft positie terug van kleur a op dezelfde manier als find_edge_piece  */
-int find_corner_piece(char a, char b, char c, char matrix[6][9]) {
-    int i; int j;
+ *@return char: geeft positie terug van kleur a op dezelfde manier als find_edge_piece  */
+char find_corner_piece(char a, char b, char c, char matrix[6][9]) {
+    char i; char j;
     for(i = 0; i < 6; i++) {
 		for (j = 0; j < 9; j += 2) { // 4 en 6 iteratie zijn overbodig: corners zijn enkel 0 2 6 8 
 			if (matrix[i][j] == 'W' && j!=4) {
