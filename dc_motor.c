@@ -13,10 +13,10 @@
 #include "dwengoBoard.h"
 #include "dc_motor.h"
 
-/** @brief Initialiseert de timer en PWM-driver van de PIC-controller
+/**@brief Initialiseert de timer en PWM-driver van de PIC-controller
  * @param void 
  * @return void
- * */
+ */
 void initPWM(){
     
     PR2 = 0b10000000; /*  periode PWM*/
