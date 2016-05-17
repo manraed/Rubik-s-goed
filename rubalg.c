@@ -1,3 +1,11 @@
+/**@file rubalg.c
+ * @brief Bevat de functies voor de verschillende fasen van het algoritme
+ * @author Maarten Anraed
+ * @author Maximiliaan Leyman
+ * @author Michiel Povré
+ * @bug Geen gekend
+ */
+
 #include "rubalg.h"
 #include "bewegingen.h"
 
