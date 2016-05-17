@@ -10,7 +10,7 @@
  *@bug: zit nog bug: het reeds gevonden kruis wordt toch soms nog verbroken //TODO delete
  *@return void (matrix heeft nu een wit vlak) */
 void maak_wit_kruis(char matrix[6][9]) {
-	char wb; char wo; char wg; char wr;
+	unsigned char wb; unsigned char wo; unsigned char wg; unsigned char wr;
 	// eerst wit-blauw edgepiece correct plaatsen
 	wb = find_edgepiece('W', 'B', matrix); 
    // wb/10 is vlak, wb%10 is positie
@@ -230,8 +230,8 @@ void maak_wit_kruis(char matrix[6][9]) {
  *        char b: kleur van blok
  *@return  char: tiental is het vlak van char a, eenheid de positie van char a in het vlak, geeft dus positie van eerst meegegeven kleur terug! */
 char find_edgepiece(char a, char b, char matrix[6][9]){ 
-    char i; char j;
-	char result ; 
+    unsigned char i; unsigned char j;
+	unsigned char result ; 
 	//edge enkel op pos met oneven indexen zoeken
 	for (i = 0; i < 6; i++) {
 	for (j = 1; j < 8; j += 2) {
@@ -420,7 +420,7 @@ void bringdownedge(char a, char b, char matrix[6][9]) {
  *@param:  char matrix[6][9]: de matrix van de kubus
  *@return void  */
 void solve_corner_pieces(char matrix[6][9]) {
-	char cp1; char cp2;
+	unsigned char cp1; unsigned char cp2;
 	/* eerst wit-blauw-rood cornerpiece inschuiven */
 	cp1 = find_corner_piece('W', 'B', 'R', matrix); 
 	if (cp1 / 10 != 0 && cp1 != 10 && cp1 != 16 && cp1 != 26 && cp1 != 28 && cp1 != 32 && cp1 != 38 && cp1 != 40 && cp1 != 42) { // indien cornerpiece vanboven zit
@@ -672,7 +672,7 @@ void wit_groen_rood_inschuiven(char cp2, char matrix[6][9]) {
  *@bug: deze functie kan nog geoptimaliseerd worden!
  *@return void  */
 void solve_middle_layer(char matrix[6][9]) {
-	char controle = 0;
+	unsigned char controle = 0;
 	draai_links(matrix); draai_links(matrix); // zie dat vlak geel naar boven komt te staan
 	while (controle == 0) {
 		while (midden_test(matrix) == 1) {
@@ -840,7 +840,7 @@ char midden_test(char matrix[6][9]) {
  *@param:  char matrix[6][9]: de matrix van de kubus
  *@return void  */
 void maak_geel_kruis(char matrix[6][9]) {
-	char a = maak_geel_tussenstap(matrix);
+	unsigned char a = maak_geel_tussenstap(matrix);
 	if (a != 0) {
 		omsingelde_hoek(matrix); // indien geen enkel geval -> omsingelde hoek rotaties doen en functie opnieuw oproepen
 		maak_geel_tussenstap(matrix);
@@ -1403,7 +1403,7 @@ void yellow_edges_counter_clockwise(char matrix[6][9]) {
 		  char c: kleur
  *@return char: geeft positie terug van kleur a op dezelfde manier als find_edge_piece  */
 char find_corner_piece(char a, char b, char c, char matrix[6][9]) {
-    char i; char j;
+    unsigned char i; unsigned char j;
     for(i = 0; i < 6; i++) {
 		for (j = 0; j < 9; j += 2) { // 4 en 6 iteratie zijn overbodig: corners zijn enkel 0 2 6 8 
 			if (matrix[i][j] == 'W' && j!=4) {

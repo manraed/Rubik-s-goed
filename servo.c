@@ -1,3 +1,12 @@
+/**@file servo.c
+ * @brief Bevat de functies voor de aansturing van de servos en het onderhouden van de gerelateerde PWM-puls.
+ * @author Maximiliaan Leyman
+ * @author Maarten Anraed
+ * @author Michiel Povré
+ * @bug Geen gekend
+ */
+
+
 #include <p18f4550.h>
 #include <delays.h>
 #include <string.h>

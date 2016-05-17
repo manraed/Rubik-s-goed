@@ -1,3 +1,11 @@
+/**@file dc_motor.c
+ * @brief Bevat de functies voor de aansturing van de DC-motoren en het aansturen en initialiseren van de onderliggende systemen
+ * @author Maximiliaan Leyman
+ * @author Maarten Anraed
+ * @author Michiel Povré
+ * @bug Geen gekend
+ */
+
 #include <p18f4550.h>
 #include <delays.h>
 #include <string.h>
@@ -5,9 +13,9 @@
 #include "dwengoBoard.h"
 #include "dc_motor.h"
 
-/** @brief: Initialiseert de timer en PWM-driver van de PIC-controller
- * @param: void 
- * @return: void
+/** @brief Initialiseert de timer en PWM-driver van de PIC-controller
+ * @param void 
+ * @return void
  * */
 void initPWM(){
     
@@ -28,9 +36,9 @@ void initPWM(){
     T2CONbits.TMR2ON = 1; /* zet timer op voor PWM*/
 }
 
-/**@brief: Laat motor 1 voor tijd*100ms in de meegegeven richting meedraaien.
- * @param: char richting: de richting om in te draaien (1 voor vooruit, 0 voor achteruit), int tijd: de tijd in eenheden van 100ms om de motor te draaien.
- * @return: void
+/**@brief Laat motor 1 voor tijd*100ms in de meegegeven richting meedraaien.
+ * @param char richting: de richting om in te draaien (1 voor vooruit, 0 voor achteruit), int tijd: de tijd in eenheden van 100ms om de motor te draaien.
+ * @return void
  */
 void motor1(char richting, int tijd){
     if(richting==0){ /* achteruit*/
@@ -46,9 +54,9 @@ void motor1(char richting, int tijd){
     CCPR1L = 0b00000000;
 }
 
-/**@brief: Laat motor 2 voor tijd*100ms in de meegegeven richting meedraaien.
- * @param: char richting: de richting om in te draaien (1 voor vooruit, 0 voor achteruit), int tijd: de tijd in eenheden van 100ms om de motor te draaien.
- * @return: void
+/**@brief Laat motor 2 voor tijd*100ms in de meegegeven richting meedraaien.
+ * @param char richting: de richting om in te draaien (1 voor vooruit, 0 voor achteruit), int tijd: de tijd in eenheden van 100ms om de motor te draaien.
+ * @return void
  */
 void motor2(char richting, int tijd){
     if(richting==0){ /* achteruit*/
@@ -64,33 +72,33 @@ void motor2(char richting, int tijd){
     CCPR2L = 0b00000000;
 }
 
-/**@brief: Opent motor 1.
- * @param: void
- * @return: void
+/**@brief Opent motor 1.
+ * @param void
+ * @return void
  */
 void motor1open(){
     motor1(0,6);
 }
 
-/**@brief: Sluit motor 1.
- * @param: void
- * @return: void
+/**@brief Sluit motor 1.
+ * @param void
+ * @return void
  */
 void motor1toe(){
     motor1(1,4);
 }
 
-/**@brief: Opent motor 2.
- * @param: void
- * @return: void
+/**@brief Opent motor 2.
+ * @param void
+ * @return void
  */
 void motor2open(){
     motor2(0,6);
 }
 
-/**@brief: Sluit motor 2.
- * @param: void
- * @return: void
+/**@brief Sluit motor 2.
+ * @param void
+ * @return void
  */
 void motor2toe(){
     motor2(1,4);
