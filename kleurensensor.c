@@ -1,3 +1,11 @@
+/**@file bewegingen.c
+ * @brief Bevat de functies voor de aansturing van de servos en het onderhouden van de gerelateerde PWM-puls.
+ * @author Maarten Anraed
+ * @author Maximiliaan Leyman
+ * @author Michiel Povré
+ * @bug Geen gekend
+ */
+
 #include <p18f4550.h>
 #include "kleurensensor.h"
 #include "dwengoDelay.h"
