@@ -18,11 +18,11 @@
 #define SERV3 LATBbits.LATB6
 #define SERV4 LATBbits.LATB7
 
-    extern char state1;
-    extern char state2;
-    extern char state3;
-    extern char state4;
-    extern int  timervlag;
+    extern unsigned char state1;
+    extern unsigned char state2;
+    extern unsigned char state3;
+    extern unsigned char state4;
+    extern unsigned short timervlag;
 
     void initServo(void);
     void updateServo(void);

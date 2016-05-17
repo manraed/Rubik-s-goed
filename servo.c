@@ -14,14 +14,19 @@
 #define HOEKN10 16
 
 //Eenmalig initialiseren van de (globale) variabelen die gebruikt worden bij de timer interrupts
-int timervlag = 0;
-char state1 = 15;
-char state2 = 15;
-char state3 = 15;
-char state4 = 15;
+unsigned short timervlag = 0;
+unsigned char state1 = 15;
+unsigned char state2 = 15;
+unsigned char state3 = 15;
+unsigned char state4 = 15;
 
 /*Deze functie dient eenmalig uitgevoerd te worden bij het opstarten om de pinnen voor de servo's
   en de timer voor hun bediening te initialiseren*/
+
+/**@brief: Initialiseert de timer, interrupts en pinnen correct for de operatie van de servo's
+ * @param: void
+ * @return: void
+ */
 void initServo() {
     
     /* Initialisatie Timer */
@@ -58,6 +63,11 @@ void initServo() {
 
 /*Deze functie dient elke 0.1ms opgeroepen te worden door de timer, en onderhoudt de juiste periode voor het signaal dat
  naar de servo's gestuurd wordt, a.d.h.v. de waarden opgeslagen in de state-variabelen*/
+
+/**@brief: Bij elke timer interrupt wordt deze functie opgeroepen en zorgt ze dat de puls voor de servo's correct doorgegeven wordt
+ * @param: void
+ * @return: void
+ */
 void updateServo(void){
     /*Telkens de functie opgeroepen wordt, wordt de vlag geincrementeerd*/
     timervlag++;
@@ -78,6 +88,11 @@ void updateServo(void){
 }
 
 /*Deze vier functies nemen een hoek als input, en updaten de servo's zo dat ze naar de bijhorende hoek draaien.*/
+
+/**@brief: Deze functie zet de staat van servo 1 op de gegeven hoek
+ * @param: char hoek: De gewenste hoek om de servo op te zetten
+ * @return: void
+ */
 char servo1(char hoek){
     switch(hoek){
         case -90:{
@@ -105,6 +120,10 @@ char servo1(char hoek){
 
 }
 
+/**@brief: Deze functie zet de staat van servo 2 op de gegeven hoek
+ * @param: char hoek: De gewenste hoek om de servo op te zetten
+ * @return: void
+ */
 char servo2(char hoek){
     switch(hoek){
         case -90:{
@@ -131,6 +150,10 @@ char servo2(char hoek){
     }
 }
 
+/**@brief: Deze functie zet de staat van servo 3 op de gegeven hoek
+ * @param: char hoek: De gewenste hoek om de servo op te zetten
+ * @return: void
+ */
 char servo3(char hoek){
     switch(hoek){
         case -90:{
@@ -157,6 +180,10 @@ char servo3(char hoek){
     }
 }
 
+/**@brief: Deze functie zet de staat van servo 4 op de gegeven hoek
+ * @param: char hoek: De gewenste hoek om de servo op te zetten
+ * @return: void
+ */
 char servo4(char hoek){
     switch(hoek){
         case -90:{
@@ -184,6 +211,11 @@ char servo4(char hoek){
 }
 
 /*Deze functie laat weten wanneer de gewenste hoek niet geimplementeerd is in de bovenstaande functies.*/
+
+/**@brief: Deze functie wordt opgeroepen als er een ongeimplementeerde hoek gevraagd wordt en zet een error op het scherm
+ * @param: char hoek: De gewenste hoek om de servo op te zetten, char servo: het nummer van de servo waarbij de fout optrad.
+ * @return: void
+ */
 void unsupportedStateError(char hoek, char servo){
     clearLCD();
     appendStringToLCD("ERROR: Foute hoek bij servoaansturing");
