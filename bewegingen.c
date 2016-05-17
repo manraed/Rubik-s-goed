@@ -1,17 +1,9 @@
-/**@file bewegingen.c
- * @brief Bevat de functies voor de aansturing van de servos en het onderhouden van de gerelateerde PWM-puls.
- * @author Maarten Anraed
- * @author Maximiliaan Leyman
- * @author Michiel Povré
- * @bug Geen gekend
- */
-
 #include "bewegingen.h"
 #include "servo.h"
 #include <stdio.h>
 #include "dwengoDelay.h"
 
-char i; //nodig voor de for-lussen
+unsigned char i; //nodig voor de for-lussen
 
 /* @brief: draait de elementen van het opgegeven vlak in wijzerzin.
  * Dit is een onmogelijke actie met de kubus (enkel bedoeld om de matrix aan te passen)
@@ -19,7 +11,7 @@ char i; //nodig voor de for-lussen
  *          char matrix[6][9]: de matrix van de kubus
  * @return: void*/
 void draai_wijzerzin(char vlak, char matrix[6][9]) { 
-	char temp[9];
+	unsigned char temp[9];
 	for (i = 0; i < 9; i++) {
 		temp[i] = matrix[vlak][i];
 	}
@@ -40,7 +32,7 @@ void draai_wijzerzin(char vlak, char matrix[6][9]) {
  *          char matrix[6][9]: de matrix van de kubus
  * @return: void*/
 void draai_tegenwijzerzin(char vlak, char matrix[6][9]) {
-	char temp[9];
+	unsigned char temp[9];
 	for (i = 0; i < 9; i++) {
 		temp[i] = matrix[vlak][i];
 	}
@@ -61,7 +53,7 @@ void draai_tegenwijzerzin(char vlak, char matrix[6][9]) {
  *          char matrix[6][9]: de matrix van de kubus
  * @return: void*/
 void draai_dubbel(char vlak, char matrix[6][9]) { 
-	char temp[9];
+	unsigned char temp[9];
 	for (i = 0; i < 9; i++) {
 		temp[i] = matrix[vlak][i];
 	}
@@ -80,9 +72,9 @@ void draai_dubbel(char vlak, char matrix[6][9]) {
  * @param:  char matrix[6][9]: de matrix van de kubus
  * @return: void*/
 void draai_voor_naar_rechts(char matrix[6][9]){
-        draai_boven(matrix[6][9]);
-        draai_rechts(matrix[6][9]);
-        draai_onder(matrix[6][9]);
+    draai_boven(matrix[6][9]);
+    draai_rechts(matrix[6][9]);
+    draai_onder(matrix[6][9]);
 }
 
 /* @brief: draait de voorkant van de kubus naar de linkerkant en past de matrix aan.
@@ -109,14 +101,14 @@ void draai_voor_naar_achter(char matrix[6][9]) {
  * @param:  char matrix[6][9]: de matrix van de kubus
  * @return: void*/
 void draai_onder(char matrix[6][9]) {
-    char temp[9];
-    int pos = 8;
+    unsigned char temp[9];
+    unsigned char pos = 8; //TODO verifieer!
     /*DC2 openen
-    Servo2 draaien in tegenwijzerzin en servo4 tegelijk in wijzerzin
-    DC2 sluiten
-    DC1 openen
-    Servo2 en 4 terugzetten
-    DC1 sluiten*/
+      Servo2 draaien in tegenwijzerzin en servo4 tegelijk in wijzerzin
+      DC2 sluiten
+      DC1 openen
+      Servo2 en 4 terugzetten
+      DC1 sluiten */
     motor1open();
     delay_ms(500);
     servo2(90);
@@ -139,18 +131,18 @@ void draai_onder(char matrix[6][9]) {
 
     /*matrix aanpassen*/
     for (i = 0; i < 9; i++) {
-	temp[i] = matrix[4][i];
-	matrix[4][i] = matrix[0][i];
-	matrix[0][i] = matrix[2][i];
+        temp[i] = matrix[4][i];
+        matrix[4][i] = matrix[0][i];
+        matrix[0][i] = matrix[2][i];
     }
     for (i = 0; i < 9; i++) {
-	matrix[2][i] = matrix[5][pos];
-	pos--;
+        matrix[2][i] = matrix[5][pos];
+        pos--;
     }
     pos = 8;
     for (i = 0; i < 9; i++) {
-	matrix[5][i] = temp[pos];
-	pos--;
+        matrix[5][i] = temp[pos];
+        pos--;
     }
     draai_wijzerzin(3, matrix);
     draai_tegenwijzerzin(1, matrix);
@@ -161,33 +153,33 @@ void draai_onder(char matrix[6][9]) {
  * @param:  char matrix[6][9]: de matrix van de kubus
  * @return: void*/
 void draai_boven(char matrix[6][9]) {
-	char temp[9];
-        int pos = 8;
+	unsigned char temp[9];
+    unsigned char pos = 8;
 	/*DC2 openen
-	Servo2 draaien in wijzerzin en servo4 tegelijk in tegenwijzerzin
-        DC2 sluiten
-        DC1 openen
-	Servo2 en 4 terugzetten
-        DC1 sluiten*/
-        motor1open();
-        delay_ms(500);
-        servo2(-90);
-        delay_ms(500);
-        motor1toe();
-        delay_ms(500);
-        motor2open();
-        delay_ms(500);
-        servo2(0);
-        servo4(-90);
-        delay_ms(500);
-        motor2toe();
-        delay_ms(500);
-        motor1open();
-        delay_ms(500);
-        servo4(0);
-        delay_ms(500);
-        motor1toe();
-        delay_ms(500);
+	  Servo2 draaien in wijzerzin en servo4 tegelijk in tegenwijzerzin
+      DC2 sluiten
+      DC1 openen
+	  Servo2 en 4 terugzetten
+      DC1 sluiten*/
+    motor1open();
+    delay_ms(500);
+    servo2(-90);
+    delay_ms(500);
+    motor1toe();
+    delay_ms(500);
+    motor2open();
+    delay_ms(500);
+    servo2(0);
+    servo4(-90);
+    delay_ms(500);
+    motor2toe();
+    delay_ms(500);
+    motor1open();
+    delay_ms(500);
+    servo4(0);
+    delay_ms(500);
+    motor1toe();
+    delay_ms(500);
 
 	/*matrix aanpassen*/
 	for (i = 0; i < 9; i++) {
@@ -212,27 +204,27 @@ void draai_boven(char matrix[6][9]) {
  * @param:  char matrix[6][9]: de matrix van de kubus
  * @return: void*/
 void draai_rechts(char matrix[6][9]) {
-	char temp[9];
+	unsigned char temp[9];
 	/*DC1 open
-	ServoA 90° wijzerzin draaien en servoC 90° tegenwijzerzin
-	DC1 sluiten
-	DC2 openen
-	ServoA en servoC terugzetten
-	DC2 sluiten*/
-        motor1open();
-        delay_ms(500);
-        servo1(90);
-        servo3(-90);
-        delay_ms(500);
-        motor1toe();
-        delay_ms(500);
-        motor2open();
-        delay_ms(500);
-        servo1(0);
-        servo3(0);
-        delay_ms(500);
-        motor2toe();
-        delay_ms(500);
+	  ServoA 90� wijzerzin draaien en servoC 90� tegenwijzerzin
+	  DC1 sluiten
+	  DC2 openen
+	  ServoA en servoC terugzetten
+	  DC2 sluiten*/
+    motor1open();
+    delay_ms(500);
+    servo1(90);
+    servo3(-90);
+    delay_ms(500);
+    motor1toe();
+    delay_ms(500);
+    motor2open();
+    delay_ms(500);
+    servo1(0);
+    servo3(0);
+    delay_ms(500);
+    motor2toe();
+    delay_ms(500);
 
 	/*matrix aanpassen*/
 	for (i = 0; i < 9; i++) {
@@ -250,26 +242,26 @@ void draai_rechts(char matrix[6][9]) {
  * @param:  char matrix[6][9]: de matrix van de kubus
  * @return: void*/
 void draai_links(char matrix[6][9]) {
-	char temp[9];
-       /*DC1 openen
-	ServoA 90° tegenwijzerzin en servoC 90° wijzerzin draaien
-	DC1 sluiten
-	DC2 openen
-	ServoA en C terugzetten
-	DC2 sluiten*/
-        motor1open();
-        delay_ms(500);
-        servo1(-90);
-        servo3(90);
-        delay_ms(500);
-        motor1toe();
-        delay_ms(500);
-        motor2open();
-        delay_ms(500);
-        servo1(0); servo3(0);
-        delay_ms(500);
-        motor2toe();
-        delay_ms(500);
+	unsigned char temp[9];
+    /*DC1 openen
+	  ServoA 90� tegenwijzerzin en servoC 90� wijzerzin draaien
+	  DC1 sluiten
+	  DC2 openen
+	  ServoA en C terugzetten
+	  DC2 sluiten*/
+    motor1open();
+    delay_ms(500);
+    servo1(-90);
+    servo3(90);
+    delay_ms(500);
+    motor1toe();
+    delay_ms(500);
+    motor2open();
+    delay_ms(500);
+    servo1(0); servo3(0);
+    delay_ms(500);
+    motor2toe();
+    delay_ms(500);
 	
 	/*matrix aanpassen*/
 	for (i = 0; i < 9; i++) {
@@ -287,19 +279,19 @@ void draai_links(char matrix[6][9]) {
  * @param:  char matrix[6][9]: de matrix van de kubus
  * @return: void*/
 void RCW(char matrix[6][9]) {
-	char temp[3];
+	unsigned char temp[3];
 	/*DC1 openen
-	ServoB 90° draaien in tegenwijzerzin
-        DC1 sluiten 
-        ServoB terugzetten*/
-        servo2(90);
-        delay_ms(500);
-        motor1open();
-        delay_ms(500);
-        servo2(0);
-        delay_ms(500);
-        motor1toe();
-        delay_ms(500);
+	  ServoB 90� draaien in tegenwijzerzin
+      DC1 sluiten 
+      ServoB terugzetten*/
+    servo2(90);
+    delay_ms(500);
+    motor1open();
+    delay_ms(500);
+    servo2(0);
+    delay_ms(500);
+    motor1toe();
+    delay_ms(500);
 
 	/*matrix aanpassen*/
 	temp[0] = matrix[5][6];
@@ -320,19 +312,19 @@ void RCW(char matrix[6][9]) {
  * @param:  char matrix[6][9]: de matrix van de kubus
  * @return: void*/
 void RCCW(char matrix[6][9]) {
-	char temp[3];
+	unsigned char temp[3];
 	/*DC1 openen
-        ServoB 90° draaien in wijzerzin
-        DC1 sluiten
-        ServoB terugzetten*/
-        motor1open();
-        delay_ms(500);
-        servo2(90);
-        delay_ms(500);
-        motor1toe();
-        delay_ms(500);
-        servo2(0);
-        delay_ms(500);
+      ServoB 90� draaien in wijzerzin
+      DC1 sluiten
+      ServoB terugzetten*/
+    motor1open();
+    delay_ms(500);
+    servo2(90);
+    delay_ms(500);
+    motor1toe();
+    delay_ms(500);
+    servo2(0);
+    delay_ms(500);
         
 	/*matrix aanpassen*/
 	temp[0] = matrix[5][6];
@@ -353,31 +345,31 @@ void RCCW(char matrix[6][9]) {
  * @param:  char matrix[6][9]: de matrix van de kubus
  * @return: void*/
 void RCW2(char matrix[6][9]) {
-        char temp[6];
-        /*DC1 openen
-	Servo2 90° draaien in wijzerzin
-	DC1 sluiten
-        Servo2 in tegenwijzerzin 
-        DC1 openen
-        Servo2 terugzetten
-        DC1 sluiten*/
-        motor1open();
-        delay_ms(500);
-        servo2(90);
-        delay_ms(500);
-        motor1toe();
-        delay_ms(500);
-        servo2(-90);
-        delay_ms(500);
-        motor1open();
-        delay_ms(500);
-        servo2(0);
-        delay_ms(500);
-        motor1toe();
-        delay_ms(500);
+    unsigned char temp[6];
+    /*DC1 openen
+	  Servo2 90� draaien in wijzerzin
+	  DC1 sluiten
+      Servo2 in tegenwijzerzin 
+      DC1 openen
+      Servo2 terugzetten
+      DC1 sluiten*/
+    motor1open();
+    delay_ms(500);
+    servo2(90);
+    delay_ms(500);
+    motor1toe();
+    delay_ms(500);
+    servo2(-90);
+    delay_ms(500);
+    motor1open();
+    delay_ms(500);
+    servo2(0);
+    delay_ms(500);
+    motor1toe();
+    delay_ms(500);
         
-        /*matrix aanpassen*/
-        for (i = 0; i < 3; i++) {
+    /*matrix aanpassen*/
+    for (i = 0; i < 3; i++) {
 		temp[i] = matrix[0][2 + 3 * i];
 		temp[i + 3] = matrix[2][2 + 3 * i];
 		matrix[2][2 + 3 * i] = matrix[4][2 + 3 * i];
@@ -398,19 +390,19 @@ void RCW2(char matrix[6][9]) {
  * @param:  char matrix[6][9]: de matrix van de kubus
  * @return: void*/
 void LCW(char matrix[6][9]) {
-	char temp[3];
+	unsigned char temp[3];
 	/*DC1 openen
-        Servo4 90° in tegenwijzerzin draaien
-	DC1 sluiten
-        Servo4 terugzetten*/
-        motor1open();
-        delay_ms(500);
-        servo4(-90);
-        delay_ms(500);
-        motor1toe();
-        delay_ms(500);
-        servo4(0);
-        delay_ms(500);
+      Servo4 90� in tegenwijzerzin draaien
+	  DC1 sluiten
+      Servo4 terugzetten*/
+    motor1open();
+    delay_ms(500);
+    servo4(-90);
+    delay_ms(500);
+    motor1toe();
+    delay_ms(500);
+    servo4(0);
+    delay_ms(500);
 
     /*matrix aanpassen*/
     temp[0] = matrix[5][8];
@@ -420,9 +412,9 @@ void LCW(char matrix[6][9]) {
     matrix[5][5] = matrix[4][3];
     matrix[5][2] = matrix[4][6];
     for (i = 0; i < 3; i++) {
-	matrix[4][3 * i] = matrix[0][3 * i];
-	matrix[0][3 * i] = matrix[2][3 * i];
-	matrix[2][3 * i] = temp[i];
+        matrix[4][3 * i] = matrix[0][3 * i];
+        matrix[0][3 * i] = matrix[2][3 * i];
+        matrix[2][3 * i] = temp[i];
     }
     draai_wijzerzin(3, matrix);
 }
@@ -432,9 +424,9 @@ void LCW(char matrix[6][9]) {
  * @param:  char matrix[6][9]: de matrix van de kubus
  * @return: void*/
 void LCCW(char matrix[6][9]) {
-    char temp[3];
+    unsigned char temp[3];
     /*DC1 openen
-    Servo4 90° draaien in wijzerzin
+    Servo4 90� draaien in wijzerzin
     DC1 sluiten
     Servo4 terugzetten*/
     motor1open();
@@ -454,9 +446,9 @@ void LCCW(char matrix[6][9]) {
     matrix[5][5] = matrix[2][3];
     matrix[5][2] = matrix[2][6];
     for (i = 0; i < 3; i++) {
-	matrix[2][3 * i] = matrix[0][3 * i];
-	matrix[0][3 * i] = matrix[4][3 * i];
-	matrix[4][3 * i] = temp[i];
+        matrix[2][3 * i] = matrix[0][3 * i];
+        matrix[0][3 * i] = matrix[4][3 * i];
+        matrix[4][3 * i] = temp[i];
     }
     draai_tegenwijzerzin(3, matrix);
 }
@@ -466,14 +458,14 @@ void LCCW(char matrix[6][9]) {
  * @param:  char matrix[6][9]: de matrix van de kubus
  * @return: void*/
 void LCW2(char matrix[6][9]) {
-    char temp[6];
+    unsigned char temp[6];
     /*DC1 openen
-    Servo4 90° draaien in wijzerzin
-    D1 sluiten
-    Servo4 in tegenwijzerzin 
-    DC1 openen
-    Servo 4 terugzetten
-    DC1 sluiten*/
+      Servo4 90� draaien in wijzerzin
+      D1 sluiten
+      Servo4 in tegenwijzerzin 
+      DC1 openen
+      Servo 4 terugzetten
+      DC1 sluiten*/
     motor1open();
     delay_ms(500);
     servo4(90);
@@ -491,10 +483,10 @@ void LCW2(char matrix[6][9]) {
       
     /*matrix aanpassen*/
     for (i = 0; i < 3; i++) {
-	temp[i] = matrix[0][3 * i];
-	temp[i + 3] = matrix[2][3 * i];
-	matrix[2][3 * i] = matrix[4][3 * i];
-	matrix[4][3 * i] = temp[3 + i];
+        temp[i] = matrix[0][3 * i];
+        temp[i + 3] = matrix[2][3 * i];
+        matrix[2][3 * i] = matrix[4][3 * i];
+        matrix[4][3 * i] = temp[3 + i];
     	matrix[0][3 * i] = matrix[5][8 - 3 * i];
     }
     matrix[0][0] = matrix[5][8];
@@ -510,12 +502,11 @@ void LCW2(char matrix[6][9]) {
  * @param:  char matrix[6][9]: de matrix van de kubus
  * @return: void*/
 void FCW(char matrix[6][9]) {
-    char temp[3];
+    unsigned char temp[3];
     /*DC2 openen
-    ServoC 90° draaien in tegenwijzerzin
-    DC2 sluiten
-    ServoC terugzetten
-    */
+      ServoC 90� draaien in tegenwijzerzin
+      DC2 sluiten
+      ServoC terugzetten*/
     servo3(90);
     delay_ms(500);
     motor2open();
@@ -527,11 +518,11 @@ void FCW(char matrix[6][9]) {
 
     /*matrix aanpassen*/
     for (i = 6; i < 9; i++) {
-	temp[i - 6] = matrix[3][i];
-	matrix[3][i] = matrix[5][i];
-	matrix[5][i] = matrix[1][i];
-	matrix[1][i] = matrix[0][i];
-	matrix[0][i] = temp[i - 6];
+        temp[i - 6] = matrix[3][i];
+        matrix[3][i] = matrix[5][i];
+        matrix[5][i] = matrix[1][i];
+        matrix[1][i] = matrix[0][i];
+        matrix[0][i] = temp[i - 6];
     }
     draai_wijzerzin(4, matrix);
 }
@@ -540,9 +531,9 @@ void FCW(char matrix[6][9]) {
  * @param:  char matrix[6][9]: de matrix van de kubus
  * @return: void*/
 void FCCW(char matrix[6][9]) {
-    char temp[3];
+    unsigned char temp[3];
     /*DC2 openen
-    ServoC 90° draaien in wijzerzin
+    ServoC 90� draaien in wijzerzin
     DC2 sluiten
     ServoC terugzetten*/
     motor2open();
@@ -556,11 +547,11 @@ void FCCW(char matrix[6][9]) {
 
     /*matrix aanpassen*/
     for (i = 6; i < 9; i++) {
-	temp[i - 6] = matrix[0][i];
-	matrix[0][i] = matrix[1][i];
-	matrix[1][i] = matrix[5][i];
-	matrix[5][i] = matrix[3][i];
-	matrix[3][i] = temp[i - 6];
+        temp[i - 6] = matrix[0][i];
+        matrix[0][i] = matrix[1][i];
+        matrix[1][i] = matrix[5][i];
+        matrix[5][i] = matrix[3][i];
+        matrix[3][i] = temp[i - 6];
     }
     draai_tegenwijzerzin(4, matrix);
 }
@@ -569,14 +560,14 @@ void FCCW(char matrix[6][9]) {
  * @param:  char matrix[6][9]: de matrix van de kubus
  * @return: void*/
 void FCW2(char matrix[6][9]) {
-    char temp[6];
+    unsigned char temp[6];
     /*DC2 openen
-    Servo1 90° in wijzerzin draaien
-    DC2 sluiten
-    Servo1 90 in tegenwijzerzin draaien
-    DC2 openen
-    Servo1 terugzetten
-    DC2 sluiten*/
+      Servo1 90� in wijzerzin draaien
+      DC2 sluiten
+      Servo1 90 in tegenwijzerzin draaien
+      DC2 openen
+      Servo1 terugzetten
+      DC2 sluiten*/
     motor2open();
     delay_ms(500);
     servo1(90);
@@ -595,11 +586,11 @@ void FCW2(char matrix[6][9]) {
     /*matrix aanpassen*/
     for (i = 0; i < 3; i++) {
     	temp[i] = matrix[0][6 + i];
-	matrix[0][6 + i] = matrix[5][i + 6];
-	matrix[5][6 + i] = temp[i];
-	temp[i + 3] = matrix[1][6 + i];
-	matrix[1][6 + i] = matrix[3][i + 6];
-	matrix[3][6 + i] = temp[i + 3];
+        matrix[0][6 + i] = matrix[5][i + 6];
+        matrix[5][6 + i] = temp[i];
+        temp[i + 3] = matrix[1][6 + i];
+        matrix[1][6 + i] = matrix[3][i + 6];
+        matrix[3][6 + i] = temp[i + 3];
     }
     draai_dubbel(4, matrix);
 }
@@ -608,11 +599,11 @@ void FCW2(char matrix[6][9]) {
  * @param:  char matrix[6][9]: de matrix van de kubus
  * @return: void*/
 void BCW(char matrix[6][9]) {
-    char temp[3];
+    unsigned char temp[3];
     /*DC2 openen
-    Servo1 90° in tegenwijzerzin draaien
-    DC2 sluiten
-    Servo1 terugdraaien*/
+      Servo1 90� in tegenwijzerzin draaien
+      DC2 sluiten
+      Servo1 terugdraaien*/
     motor2open();
     delay_ms(500);
     servo1(-90);
@@ -623,11 +614,11 @@ void BCW(char matrix[6][9]) {
         
     /*matrix aanpassen*/
     for (i = 0; i < 3; i++) {
-	temp[i] = matrix[0][i];
-	matrix[0][i] = matrix[1][i];
-	matrix[1][i] = matrix[5][i];
-	matrix[5][i] = matrix[3][i];
-	matrix[3][i] = temp[i];
+        temp[i] = matrix[0][i];
+        matrix[0][i] = matrix[1][i];
+        matrix[1][i] = matrix[5][i];
+        matrix[5][i] = matrix[3][i];
+        matrix[3][i] = temp[i];
     }
     draai_wijzerzin(2, matrix);
 }
@@ -636,11 +627,11 @@ void BCW(char matrix[6][9]) {
  * @param:  char matrix[6][9]: de matrix van de kubus
  * @return: void*/
 void BCCW(char matrix[6][9]) {
-    char temp[3];
+    unsigned char temp[3];
     /*DC2 openen
-    Servo1 90° in wijzerzin draaien
-    DC2 sluiten
-    Servo1 terugdraaien*/
+      Servo1 90� in wijzerzin draaien
+      DC2 sluiten
+      Servo1 terugdraaien*/
     motor2open();
     delay_ms(500);
     servo1(90);
@@ -653,9 +644,9 @@ void BCCW(char matrix[6][9]) {
     for (i = 0; i < 3; i++) {
     	temp[i] = matrix[3][i];
     	matrix[3][i] = matrix[5][i];
-	matrix[5][i] = matrix[1][i];
-	matrix[1][i] = matrix[0][i];
-	matrix[0][i] = temp[i];
+        matrix[5][i] = matrix[1][i];
+        matrix[1][i] = matrix[0][i];
+        matrix[0][i] = temp[i];
     }
     draai_tegenwijzerzin(2, matrix);
 }
@@ -664,14 +655,14 @@ void BCCW(char matrix[6][9]) {
  * @param:  char matrix[6][9]: de matrix van de kubus
  * @return: void*/
 void BCW2(char matrix[6][9]) {
-    char temp[6];
+    unsigned char temp[6];
     /*DC2 openen
-    Servo1 90° in wijzerzin draaien
-    DC2 sluiten
-    Servo1 90 in tegenwijzerzin draaien
-    DC2 openen
-    Servo1 terugzetten
-    DC2 sluiten*/
+      Servo1 90� in wijzerzin draaien
+      DC2 sluiten
+      Servo1 90 in tegenwijzerzin draaien
+      DC2 openen
+      Servo1 terugzetten
+      DC2 sluiten*/
     motor2open();
     delay_ms(500);
     servo1(90);
@@ -689,12 +680,12 @@ void BCW2(char matrix[6][9]) {
     
     /*Matrix aanpassen*/
     for (i = 0; i < 3; i++) {
-	temp[i] = matrix[0][i];
-	matrix[0][i] = matrix[5][i];
-	matrix[5][i] = temp[i];
-	temp[i + 3] = matrix[1][i];
-	matrix[1][i] = matrix[3][i];
-	matrix[3][i] = temp[i + 3];
+        temp[i] = matrix[0][i];
+        matrix[0][i] = matrix[5][i];
+        matrix[5][i] = temp[i];
+        temp[i + 3] = matrix[1][i];
+        matrix[1][i] = matrix[3][i];
+        matrix[3][i] = temp[i + 3];
     }
     draai_dubbel(2, matrix);
 }
