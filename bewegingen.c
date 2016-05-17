@@ -1,3 +1,11 @@
+/**@file bewegingen.c
+ * @brief Bevat alle mogelijke bewegingen die met de robot uitgevoerd kunnen worden
+ * @author Maarten Anraed
+ * @author Maximiliaan Leyman
+ * @author Michiel Povré
+ * @bug Geen gekend
+ */
+
 #include "bewegingen.h"
 #include "servo.h"
 #include <stdio.h>
@@ -206,7 +214,7 @@ void draai_boven(char matrix[6][9]) {
 void draai_rechts(char matrix[6][9]) {
 	unsigned char temp[9];
 	/*DC1 open
-	  ServoA 90� wijzerzin draaien en servoC 90� tegenwijzerzin
+	  ServoA 90° wijzerzin draaien en servoC 90° tegenwijzerzin
 	  DC1 sluiten
 	  DC2 openen
 	  ServoA en servoC terugzetten
@@ -244,7 +252,7 @@ void draai_rechts(char matrix[6][9]) {
 void draai_links(char matrix[6][9]) {
 	unsigned char temp[9];
     /*DC1 openen
-	  ServoA 90� tegenwijzerzin en servoC 90� wijzerzin draaien
+	  ServoA 90° tegenwijzerzin en servoC 90° wijzerzin draaien
 	  DC1 sluiten
 	  DC2 openen
 	  ServoA en C terugzetten
@@ -281,7 +289,7 @@ void draai_links(char matrix[6][9]) {
 void RCW(char matrix[6][9]) {
 	unsigned char temp[3];
 	/*DC1 openen
-	  ServoB 90� draaien in tegenwijzerzin
+	  ServoB 90° draaien in tegenwijzerzin
       DC1 sluiten 
       ServoB terugzetten*/
     servo2(90);
@@ -314,7 +322,7 @@ void RCW(char matrix[6][9]) {
 void RCCW(char matrix[6][9]) {
 	unsigned char temp[3];
 	/*DC1 openen
-      ServoB 90� draaien in wijzerzin
+      ServoB 90° draaien in wijzerzin
       DC1 sluiten
       ServoB terugzetten*/
     motor1open();
@@ -347,7 +355,7 @@ void RCCW(char matrix[6][9]) {
 void RCW2(char matrix[6][9]) {
     unsigned char temp[6];
     /*DC1 openen
-	  Servo2 90� draaien in wijzerzin
+	  Servo2 90° draaien in wijzerzin
 	  DC1 sluiten
       Servo2 in tegenwijzerzin 
       DC1 openen
@@ -392,7 +400,7 @@ void RCW2(char matrix[6][9]) {
 void LCW(char matrix[6][9]) {
 	unsigned char temp[3];
 	/*DC1 openen
-      Servo4 90� in tegenwijzerzin draaien
+      Servo4 90° in tegenwijzerzin draaien
 	  DC1 sluiten
       Servo4 terugzetten*/
     motor1open();
@@ -426,7 +434,7 @@ void LCW(char matrix[6][9]) {
 void LCCW(char matrix[6][9]) {
     unsigned char temp[3];
     /*DC1 openen
-    Servo4 90� draaien in wijzerzin
+    Servo4 90° draaien in wijzerzin
     DC1 sluiten
     Servo4 terugzetten*/
     motor1open();
@@ -460,7 +468,7 @@ void LCCW(char matrix[6][9]) {
 void LCW2(char matrix[6][9]) {
     unsigned char temp[6];
     /*DC1 openen
-      Servo4 90� draaien in wijzerzin
+      Servo4 90° draaien in wijzerzin
       D1 sluiten
       Servo4 in tegenwijzerzin 
       DC1 openen
@@ -504,7 +512,7 @@ void LCW2(char matrix[6][9]) {
 void FCW(char matrix[6][9]) {
     unsigned char temp[3];
     /*DC2 openen
-      ServoC 90� draaien in tegenwijzerzin
+      ServoC 90° draaien in tegenwijzerzin
       DC2 sluiten
       ServoC terugzetten*/
     servo3(90);
@@ -533,7 +541,7 @@ void FCW(char matrix[6][9]) {
 void FCCW(char matrix[6][9]) {
     unsigned char temp[3];
     /*DC2 openen
-    ServoC 90� draaien in wijzerzin
+    ServoC 90° draaien in wijzerzin
     DC2 sluiten
     ServoC terugzetten*/
     motor2open();
@@ -562,7 +570,7 @@ void FCCW(char matrix[6][9]) {
 void FCW2(char matrix[6][9]) {
     unsigned char temp[6];
     /*DC2 openen
-      Servo1 90� in wijzerzin draaien
+      Servo1 90° in wijzerzin draaien
       DC2 sluiten
       Servo1 90 in tegenwijzerzin draaien
       DC2 openen
@@ -601,7 +609,7 @@ void FCW2(char matrix[6][9]) {
 void BCW(char matrix[6][9]) {
     unsigned char temp[3];
     /*DC2 openen
-      Servo1 90� in tegenwijzerzin draaien
+      Servo1 90° in tegenwijzerzin draaien
       DC2 sluiten
       Servo1 terugdraaien*/
     motor2open();
@@ -629,7 +637,7 @@ void BCW(char matrix[6][9]) {
 void BCCW(char matrix[6][9]) {
     unsigned char temp[3];
     /*DC2 openen
-      Servo1 90� in wijzerzin draaien
+      Servo1 90° in wijzerzin draaien
       DC2 sluiten
       Servo1 terugdraaien*/
     motor2open();
@@ -657,7 +665,7 @@ void BCCW(char matrix[6][9]) {
 void BCW2(char matrix[6][9]) {
     unsigned char temp[6];
     /*DC2 openen
-      Servo1 90� in wijzerzin draaien
+      Servo1 90° in wijzerzin draaien
       DC2 sluiten
       Servo1 90 in tegenwijzerzin draaien
       DC2 openen
